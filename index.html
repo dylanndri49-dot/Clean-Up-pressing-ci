@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clean Up Pressing – Nettoyage à sec, repassage & retouches</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #0B1F3A;
+      --blue:   #1A4D8F;
+      --sky:    #2E86DE;
+      --white:  #FFFFFF;
+      --off:    #F5F8FF;
+      --gray:   #6B7A99;
+      --light:  #E8EFF9;
+      --gold:   #F5C842;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--white);
+      color: var(--navy);
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 6%;
+      background: rgba(11,31,58,0.95);
+      backdrop-filter: blur(8px);
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--white);
+      letter-spacing: 1px;
+    }
+    .logo span { color: var(--sky); }
+    nav ul { list-style: none; display: flex; gap: 32px; }
+    nav ul a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      font-size: .88rem;
+      font-weight: 400;
+      transition: color .2s;
+    }
+    nav ul a:hover { color: var(--sky); }
+    .nav-cta {
+      background: var(--sky);
+      color: var(--white) !important;
+      padding: 9px 22px;
+      border-radius: 50px;
+      font-weight: 600 !important;
+    }
+    .nav-cta:hover { background: #1a6fc4 !important; color: var(--white) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--navy) 0%, #122B55 60%, var(--blue) 100%);
+      display: flex; align-items: center;
+      padding: 120px 6% 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(46,134,222,0.18) 0%, transparent 70%);
+    }
+    .hero-content { max-width: 620px; position: relative; z-index: 1; }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(46,134,222,0.2);
+      border: 1px solid rgba(46,134,222,0.5);
+      color: var(--sky);
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 50px;
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      color: var(--white);
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    .hero h1 em { color: var(--sky); font-style: normal; }
+    .hero p {
+      color: rgba(255,255,255,0.7);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 40px;
+      max-width: 500px;
+    }
+    .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--sky);
+      color: var(--white);
+      padding: 15px 34px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: .95rem;
+      text-decoration: none;
+      transition: background .2s, transform .2s;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-primary:hover { background: #1a6fc4; transform: translateY(-2px); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--white);
+      padding: 15px 34px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: .95rem;
+      text-decoration: none;
+      border: 1.5px solid rgba(255,255,255,0.4);
+      transition: border-color .2s, transform .2s;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-secondary:hover { border-color: var(--sky); color: var(--sky); transform: translateY(-2px); }
+
+    .hero-visual {
+      position: absolute; right: 6%; top: 50%;
+      transform: translateY(-50%);
+      display: flex; flex-direction: column; gap: 16px;
+      z-index: 1;
+    }
+    .stat-card {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 20px 28px;
+      text-align: center;
+      color: var(--white);
+    }
+    .stat-card .num {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--sky);
+      display: block;
+    }
+    .stat-card .lbl {
+      font-size: .78rem;
+      opacity: .7;
+      margin-top: 2px;
+    }
+
+    /* ── SECTION TITLE ── */
+    .section-label {
+      display: inline-block;
+      color: var(--sky);
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      color: var(--navy);
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      color: var(--gray);
+      font-size: .95rem;
+      line-height: 1.7;
+      max-width: 520px;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .how { padding: 100px 6%; background: var(--off); }
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 32px;
+      margin-top: 60px;
+    }
+    .step {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 36px 28px;
+      box-shadow: 0 4px 24px rgba(11,31,58,0.06);
+      transition: transform .25s, box-shadow .25s;
+    }
+    .step:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(11,31,58,0.12); }
+    .step-icon {
+      width: 56px; height: 56px;
+      background: var(--light);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem;
+      margin-bottom: 20px;
+    }
+    .step h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 10px; }
+    .step p { color: var(--gray); font-size: .88rem; line-height: 1.6; }
+
+    /* ── SERVICES ── */
+    .services { padding: 100px 6%; }
+    .services-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 60px; flex-wrap: wrap; gap: 20px; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+    .service-card {
+      background: var(--navy);
+      border-radius: 20px;
+      padding: 36px 28px;
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+      transition: transform .25s;
+    }
+    .service-card::after {
+      content: '';
+      position: absolute; bottom: -30px; right: -30px;
+      width: 120px; height: 120px;
+      background: rgba(46,134,222,0.12);
+      border-radius: 50%;
+    }
+    .service-card:hover { transform: translateY(-6px); }
+    .service-card.featured { background: var(--sky); }
+    .service-emoji { font-size: 2.2rem; margin-bottom: 20px; display: block; }
+    .service-card h3 { font-size: 1.15rem; font-weight: 600; margin-bottom: 10px; }
+    .service-card p { font-size: .88rem; opacity: .8; line-height: 1.6; }
+
+    /* ── TARIFS ── */
+    .tarifs { padding: 100px 6%; background: var(--off); }
+    .tarifs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 60px;
+    }
+    .tarif-item {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 28px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      box-shadow: 0 2px 16px rgba(11,31,58,0.05);
+      transition: box-shadow .2s;
+    }
+    .tarif-item:hover { box-shadow: 0 8px 32px rgba(11,31,58,0.1); }
+    .tarif-name { font-weight: 600; font-size: .95rem; }
+    .tarif-sub { font-size: .8rem; color: var(--gray); margin-top: 3px; }
+    .tarif-price {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--sky);
+      white-space: nowrap;
+    }
+
+    /* ── CONTACT ── */
+    .contact { padding: 100px 6%; background: var(--navy); }
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .contact .section-title { color: var(--white); }
+    .contact .section-label { color: var(--sky); }
+    .contact .section-sub { color: rgba(255,255,255,0.6); }
+
+    .contact-cards { display: flex; flex-direction: column; gap: 16px; margin-top: 40px; }
+    .contact-card {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 22px 24px;
+      display: flex; align-items: center; gap: 18px;
+      text-decoration: none;
+      transition: background .2s, transform .2s;
+    }
+    .contact-card:hover { background: rgba(46,134,222,0.2); transform: translateX(6px); }
+    .contact-card-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+    .contact-card-icon.whatsapp { background: #25D366; }
+    .contact-card-icon.phone { background: var(--sky); }
+    .contact-card-icon.clock { background: rgba(255,255,255,0.1); }
+    .contact-card-text .label { color: rgba(255,255,255,0.5); font-size: .78rem; margin-bottom: 2px; }
+    .contact-card-text .value { color: var(--white); font-weight: 600; font-size: .95rem; }
+
+    .map-placeholder {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px;
+      height: 340px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.4);
+      font-size: .9rem;
+      gap: 12px;
+    }
+    .map-placeholder .map-icon { font-size: 2.5rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #060F1E;
+      padding: 40px 6%;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px;
+    }
+    footer .logo { font-size: 1.2rem; }
+    footer p { color: rgba(255,255,255,0.35); font-size: .82rem; }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { color: rgba(255,255,255,0.4); font-size: .82rem; text-decoration: none; }
+    .footer-links a:hover { color: var(--sky); }
+
+    /* ── COMMANDE ── */
+    .commande { padding: 100px 6%; background: var(--white); }
+    .commande-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+      margin-top: 60px;
+    }
+    .wa-order {
+      background: linear-gradient(135deg, #075E54, #128C7E);
+      border-radius: 24px;
+      padding: 40px 36px;
+      color: white;
+    }
+    .wa-order h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; }
+    .wa-order p { opacity: .85; font-size: .9rem; line-height: 1.6; margin-bottom: 24px; }
+    .wa-articles { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; }
+    .wa-article {
+      background: rgba(255,255,255,0.15);
+      border: 1.5px solid rgba(255,255,255,0.3);
+      border-radius: 50px;
+      padding: 8px 18px;
+      font-size: .82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .2s;
+      user-select: none;
+    }
+    .wa-article.selected { background: white; color: #075E54; }
+    .wa-qty { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+    .wa-qty label { font-size: .85rem; opacity: .8; }
+    .wa-qty input {
+      width: 70px; padding: 8px 12px; border-radius: 10px;
+      border: none; font-size: .95rem; font-weight: 600; text-align: center;
+    }
+    .wa-send {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      background: white; color: #075E54;
+      padding: 15px 28px; border-radius: 50px;
+      font-weight: 700; font-size: .95rem;
+      cursor: pointer; border: none; width: 100%;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .wa-send:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+    .email-form { background: var(--off); border-radius: 24px; padding: 40px 36px; }
+    .email-form h3 { font-size: 1.3rem; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+    .email-form p { color: var(--gray); font-size: .9rem; margin-bottom: 28px; }
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; font-size: .82rem; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; padding: 12px 16px;
+      border: 1.5px solid var(--light); border-radius: 12px;
+      font-family: 'Poppins', sans-serif; font-size: .9rem;
+      color: var(--navy); background: white; outline: none;
+      transition: border-color .2s;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--sky); }
+    .form-group textarea { resize: vertical; min-height: 90px; }
+    .form-submit {
+      background: var(--sky); color: white;
+      padding: 14px 28px; border-radius: 50px;
+      font-weight: 700; font-size: .95rem;
+      cursor: pointer; border: none; width: 100%;
+      transition: background .2s, transform .2s;
+    }
+    .form-submit:hover { background: #1a6fc4; transform: translateY(-2px); }
+    .form-success {
+      display: none; background: #d4edda; color: #155724;
+      border-radius: 12px; padding: 14px 20px;
+      font-size: .9rem; font-weight: 600;
+      margin-top: 14px; text-align: center;
+    }
+    @media (max-width: 900px) { .commande-inner { grid-template-columns: 1fr; } }
+
+    /* ── FLOATING WHATSAPP ── */
+    .wa-float {
+      position: fixed; bottom: 28px; right: 28px; z-index: 200;
+      background: #25D366;
+      width: 58px; height: 58px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem;
+      text-decoration: none;
+      box-shadow: 0 6px 24px rgba(37,211,102,0.45);
+      animation: pulse 2.5s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 6px 24px rgba(37,211,102,0.45); }
+      50% { box-shadow: 0 6px 40px rgba(37,211,102,0.7); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero-visual { display: none; }
+      .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+      nav ul { display: none; }
+    }
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 2rem; }
+      .hero-btns { flex-direction: column; }
+      .btn-primary, .btn-secondary { text-align: center; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Clean<span>Up</span> Pressing</div>
+  <ul>
+    <li><a href="#how">Comment ça marche</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#tarifs">Tarifs</a></li>
+    <li><a href="#commande">Commander</a></li>
+    <li><a href="#contact" class="nav-cta">Nous contacter</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <span class="hero-badge">✨ Pressing professionnel</span>
+    <h1>Votre linge,<br /><em>impeccable</em><br />à chaque fois.</h1>
+    <p>Nettoyage à sec, repassage, retouches et livraison à domicile. Clean Up Pressing prend soin de vos vêtements avec expertise et rapidité.</p>
+    <div class="hero-btns">
+      <a href="https://wa.me/2250757747460" class="btn-primary">💬 Prendre rendez-vous</a>
+      <a href="#services" class="btn-secondary">Nos services →</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="stat-card">
+      <span class="num">6j/7</span>
+      <span class="lbl">Ouvert lun – sam</span>
+    </div>
+    <div class="stat-card">
+      <span class="num">8h–19h</span>
+      <span class="lbl">Horaires d'ouverture</span>
+    </div>
+    <div class="stat-card">
+      <span class="num">🚚</span>
+      <span class="lbl">Livraison à domicile</span>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <span class="section-label">Simple & rapide</span>
+  <h2 class="section-title">Comment ça marche ?</h2>
+  <p class="section-sub">En 3 étapes, vos vêtements sont nettoyés et de retour chez vous.</p>
+  <div class="how-grid">
+    <div class="step">
+      <div class="step-icon">📞</div>
+      <h3>1. Contactez-nous</h3>
+      <p>Appelez-nous ou envoyez un message WhatsApp pour convenir d'un créneau de collecte ou de dépôt.</p>
+    </div>
+    <div class="step">
+      <div class="step-icon">🧺</div>
+      <h3>2. Déposez vos vêtements</h3>
+      <p>Apportez vos articles en boutique ou profitez de notre service de collecte à domicile.</p>
+    </div>
+    <div class="step">
+      <div class="step-icon">✅</div>
+      <h3>3. Récupérez impeccable</h3>
+      <p>Vos vêtements sont nettoyés, repassés et soigneusement emballés, prêts à être récupérés.</p>
+    </div>
+    <div class="step">
+      <div class="step-icon">🚚</div>
+      <h3>4. Livraison incluse</h3>
+      <p>Nous pouvons vous livrer directement à domicile selon votre convenance et votre adresse.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="services-header">
+    <div>
+      <span class="section-label">Ce que nous faisons</span>
+      <h2 class="section-title">Nos services</h2>
+      <p class="section-sub">Du nettoyage délicat à la retouche sur mesure, nous prenons soin de chaque vêtement.</p>
+    </div>
+  </div>
+  <div class="services-grid">
+    <div class="service-card featured">
+      <span class="service-emoji">🥼</span>
+      <h3>Nettoyage à sec</h3>
+      <p>Pour vos vêtements délicats, costumes, robes et manteaux. Traitement professionnel garanti.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-emoji">👔</span>
+      <h3>Repassage</h3>
+      <p>Chemises, pantalons, robes… Un repassage soigné pour un rendu parfait, sans faux plis.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-emoji">✂️</span>
+      <h3>Retouches</h3>
+      <p>Ourlets, ajustements, réparations… Nos couturiers redonnent vie à vos vêtements.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-emoji">🚚</span>
+      <h3>Livraison à domicile</h3>
+      <p>Nous collectons et livrons vos vêtements directement chez vous, à l'heure qui vous convient.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TARIFS -->
+<section class="tarifs" id="tarifs">
+  <span class="section-label">Nos prix</span>
+  <h2 class="section-title">Tarifs transparents</h2>
+  <p class="section-sub">Des prix clairs, sans mauvaise surprise. Contactez-nous pour un devis personnalisé.</p>
+  <div class="tarifs-grid">
+    <div class="tarif-item">
+      <div><div class="tarif-name">Chemise</div><div class="tarif-sub">Lavage + repassage</div></div>
+      <div class="tarif-price">300 F</div>
+    </div>
+    <div class="tarif-item">
+      <div><div class="tarif-name">Pantalon</div><div class="tarif-sub">Lavage + repassage</div></div>
+      <div class="tarif-price">300 F</div>
+    </div>
+    <div class="tarif-item">
+      <div><div class="tarif-name">Culotte</div><div class="tarif-sub">Lavage</div></div>
+      <div class="tarif-price">300 F</div>
+    </div>
+    <div class="tarif-item">
+      <div><div class="tarif-name">Camisole</div><div class="tarif-sub">Lavage + repassage</div></div>
+      <div class="tarif-price">300 F</div>
+    </div>
+    <div class="tarif-item">
+      <div><div class="tarif-name">Pagne</div><div class="tarif-sub">Lavage + repassage</div></div>
+      <div class="tarif-price">300 F</div>
+    </div>
+    <div class="tarif-item">
+      <div><div class="tarif-name">Complet veste</div><div class="tarif-sub">Costume complet</div></div>
+      <div class="tarif-price">1 500 F</div>
+    </div>
+    <div class="tarif-item">
+      <div><div class="tarif-name">Drap</div><div class="tarif-sub">Lavage + séchage</div></div>
+      <div class="tarif-price">500 F</div>
+    </div>
+    <div class="tarif-item">
+      <div><div class="tarif-name">Couette</div><div class="tarif-sub">Lavage + séchage</div></div>
+      <div class="tarif-price">2 500 F</div>
+    </div>
+    <div class="tarif-item">
+      <div><div class="tarif-name">Chaussures</div><div class="tarif-sub">Nettoyage complet</div></div>
+      <div class="tarif-price">500 F</div>
+    </div>
+    <div class="tarif-item">
+      <div><div class="tarif-name">Tapis</div><div class="tarif-sub">Lavage en profondeur</div></div>
+      <div class="tarif-price">3 000 F</div>
+    </div>
+  </div>
+  <p style="text-align:center; margin-top:40px; color:var(--gray); font-size:.9rem;">
+    Tarifs en Francs CFA · Contactez-nous sur WhatsApp pour tout autre article 👇
+  </p>
+</section>
+
+<!-- COMMANDE -->
+<section class="commande" id="commande">
+  <span class="section-label">Passer une commande</span>
+  <h2 class="section-title">Commandez en quelques clics</h2>
+  <p class="section-sub">Via WhatsApp avec un message pré-rempli, ou par formulaire et nous vous répondons par email.</p>
+  <div class="commande-inner">
+
+    <!-- WhatsApp -->
+    <div class="wa-order">
+      <h3>💬 Commander sur WhatsApp</h3>
+      <p>Sélectionnez vos articles, indiquez la quantité et envoyez directement sur WhatsApp.</p>
+      <div class="wa-articles" id="articleList">
+        <span class="wa-article" onclick="toggleArticle(this)">Chemise</span>
+        <span class="wa-article" onclick="toggleArticle(this)">Pantalon</span>
+        <span class="wa-article" onclick="toggleArticle(this)">Culotte</span>
+        <span class="wa-article" onclick="toggleArticle(this)">Camisole</span>
+        <span class="wa-article" onclick="toggleArticle(this)">Pagne</span>
+        <span class="wa-article" onclick="toggleArticle(this)">Complet veste</span>
+        <span class="wa-article" onclick="toggleArticle(this)">Drap</span>
+        <span class="wa-article" onclick="toggleArticle(this)">Couette</span>
+        <span class="wa-article" onclick="toggleArticle(this)">Chaussures</span>
+        <span class="wa-article" onclick="toggleArticle(this)">Tapis</span>
+      </div>
+      <div class="wa-qty">
+        <label>Quantité :</label>
+        <input type="number" id="qtyInput" min="1" value="1" />
+      </div>
+      <button class="wa-send" onclick="sendWhatsApp()">
+        <span>📲</span> Envoyer sur WhatsApp
+      </button>
+    </div>
+
+    <!-- Formulaire email -->
+    <div class="email-form">
+      <h3>📧 Commander par email</h3>
+      <p>Remplissez ce formulaire et recevez une confirmation. Nous vous répondons rapidement.</p>
+      <div id="orderForm">
+        <div class="form-group">
+          <label>Votre nom</label>
+          <input type="text" id="fname" placeholder="Ex: Koné Awa" />
+        </div>
+        <div class="form-group">
+          <label>Votre téléphone</label>
+          <input type="tel" id="fphone" placeholder="Ex: 07 00 00 00 00" />
+        </div>
+        <div class="form-group">
+          <label>Article(s) à nettoyer</label>
+          <select id="farticle">
+            <option value="">-- Choisir un article --</option>
+            <option value="Chemise – 300 F">Chemise – 300 F</option>
+            <option value="Pantalon – 300 F">Pantalon – 300 F</option>
+            <option value="Culotte – 300 F">Culotte – 300 F</option>
+            <option value="Camisole – 300 F">Camisole – 300 F</option>
+            <option value="Pagne – 300 F">Pagne – 300 F</option>
+            <option value="Complet veste – 1 500 F">Complet veste – 1 500 F</option>
+            <option value="Drap – 500 F">Drap – 500 F</option>
+            <option value="Couette – 2 500 F">Couette – 2 500 F</option>
+            <option value="Chaussures – 500 F">Chaussures – 500 F</option>
+            <option value="Tapis – 3 000 F">Tapis – 3 000 F</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message / précisions</label>
+          <textarea id="fmessage" placeholder="Quantité, adresse de livraison, disponibilités…"></textarea>
+        </div>
+        <button class="form-submit" onclick="submitForm()">📨 Envoyer la commande</button>
+        <div class="form-success" id="formSuccess">✅ Commande envoyée ! Nous vous contactons bientôt.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div>
+      <span class="section-label">Contactez-nous</span>
+      <h2 class="section-title">On est là pour vous</h2>
+      <p class="section-sub">Disponibles du lundi au samedi de 8h à 19h. Répondez-nous en quelques minutes sur WhatsApp.</p>
+      <div class="contact-cards">
+        <a href="https://wa.me/2250757747460" class="contact-card" target="_blank">
+          <div class="contact-card-icon whatsapp">💬</div>
+          <div class="contact-card-text">
+            <div class="label">WhatsApp & Appel</div>
+            <div class="value">07 57 74 74 60</div>
+          </div>
+        </a>
+        <a href="https://wa.me/2250778544872" class="contact-card" target="_blank">
+          <div class="contact-card-icon whatsapp">💬</div>
+          <div class="contact-card-text">
+            <div class="label">WhatsApp & Appel</div>
+            <div class="value">07 78 54 48 72</div>
+          </div>
+        </a>
+        <div class="contact-card" style="cursor:default;">
+          <div class="contact-card-icon clock">🕐</div>
+          <div class="contact-card-text">
+            <div class="label">Horaires d'ouverture</div>
+            <div class="value">Lun – Sam &nbsp;|&nbsp; 8h00 – 19h00</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="map-placeholder">
+      <span class="map-icon">📍</span>
+      <span style="color:white; font-weight:600;">Bouaké – Nimbo</span>
+      <span style="font-size:.85rem; opacity:.8; color:white;">Côte d'Ivoire</span>
+      <a href="https://maps.google.com/?q=Bouaké+Nimbo+Côte+d'Ivoire" target="_blank"
+         style="margin-top:12px; background:var(--sky); color:white; padding:10px 24px; border-radius:50px; text-decoration:none; font-size:.85rem; font-weight:600;">
+        📍 Voir sur Google Maps
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">Clean<span>Up</span> Pressing</div>
+  <p>© 2025 Clean Up Pressing. Tous droits réservés.</p>
+  <div class="footer-links">
+    <a href="#how">Comment ça marche</a>
+    <a href="#services">Services</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+<!-- FLOATING WHATSAPP -->
+<a href="https://wa.me/2250757747460" class="wa-float" target="_blank" title="Nous contacter sur WhatsApp">💬</a>
+
+<script>
+  // ── WhatsApp Commander ──
+  function toggleArticle(el) {
+    el.classList.toggle('selected');
+  }
+  function sendWhatsApp() {
+    const selected = [...document.querySelectorAll('.wa-article.selected')].map(e => e.textContent);
+    const qty = document.getElementById('qtyInput').value;
+    if (selected.length === 0) { alert('Veuillez sélectionner au moins un article.'); return; }
+    const msg = encodeURIComponent(
+      'Bonjour Clean Up Pressing ! 👋\n\nJe souhaite commander :\n' +
+      selected.map(a => `• ${a} x${qty}`).join('\n') +
+      '\n\nMerci de me confirmer le prix et la disponibilité. 🙏'
+    );
+    window.open('https://wa.me/2250757747460?text=' + msg, '_blank');
+  }
+
+  // ── Formulaire Formspree ──
+  async function submitForm() {
+    const name    = document.getElementById('fname').value.trim();
+    const phone   = document.getElementById('fphone').value.trim();
+    const article = document.getElementById('farticle').value;
+    const message = document.getElementById('fmessage').value.trim();
+    if (!name || !phone || !article) { alert('Veuillez remplir au moins votre nom, téléphone et article.'); return; }
+    const btn = document.querySelector('.form-submit');
+    btn.textContent = 'Envoi en cours…'; btn.disabled = true;
+    try {
+      const res = await fetch('https://formspree.io/f/xykalwle', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ name, phone, article, message,
+          _replyto: 'cleanuppressing05@gmail.com',
+          _subject: '🧺 Nouvelle commande – Clean Up Pressing' })
+      });
+      if (res.ok) {
+        document.getElementById('formSuccess').style.display = 'block';
+        btn.textContent = '✅ Envoyé !';
+      } else {
+        btn.textContent = '📨 Envoyer la commande'; btn.disabled = false;
+        alert('Erreur d\'envoi. Réessayez ou contactez-nous sur WhatsApp.');
+      }
+    } catch(e) {
+      btn.textContent = '📨 Envoyer la commande'; btn.disabled = false;
+      alert('Erreur réseau. Contactez-nous sur WhatsApp.');
+    }
+  }
+</script>
+</body>
+</html>
